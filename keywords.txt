@@ -1,0 +1,10 @@
+Button	KEYWORD1
+setDebounceTimeout	KEYWORD2
+inputPullup	KEYWORD2
+disableInputPullup	KEYWORD2
+invertReading	KEYWORD2
+resetReading	KEYWORD2
+isPressed	KEYWORD2
+isReleased	KEYWORD2
+onPressed	KEYWORD2
+onReleased	KEYWORD2
