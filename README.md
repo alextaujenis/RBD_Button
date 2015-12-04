@@ -2,9 +2,8 @@
 Read and debounce buttons and switches without delay.
 
 * [Documentation](http://robotsbigdata.com/docs-arduino-button.html)
-* [Download Library](https://github.com/alextaujenis/RBD_Button/raw/master/extras/RBD_Button.zip)
 * [Project Website](http://robotsbigdata.com)
-* [Report an Issue](https://github.com/alextaujenis/RBD_Button/issues/new)*
+* [Comments, Questions, or Issues](https://github.com/alextaujenis/RBD_Button/issues/new)*
 
 \**Please include your Arduino make/model and IDE version when reporting an issue with this library.*
 
