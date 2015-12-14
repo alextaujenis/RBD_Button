@@ -1,5 +1,5 @@
-#Arduino Button Library v1.0.1
-Read and debounce buttons and switches without delay.
+#Arduino Button Library v2.0.0
+Read and debounce buttons and switches without delay or interrupts.
 
 * [Documentation](http://robotsbigdata.com/docs-arduino-button.html)
 * [Project Website](http://robotsbigdata.com)

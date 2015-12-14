@@ -1,10 +1,10 @@
-// Arduino RBD Button Library Example v1.0.1 - Debounce a button with events. INPUT_PULLUP Disabled Warning: this example requires resistors in your circuit.
+// Arduino RBD Button Library Example v2.0.0 - Debounce a button with events. INPUT_PULLUP Disabled Warning: this example requires resistors in your circuit.
 // https://github.com/alextaujenis/RBD_Button
 // Copyright 2015 Alex Taujenis
 // MIT License
 
-#include <RBD_Timer.h>
-#include <RBD_Button.h>
+#include <RBD_Timer.h>  // https://github.com/alextaujenis/RBD_Timer
+#include <RBD_Button.h> // https://github.com/alextaujenis/RBD_Button
 
 // INPUT_PULLUP Disabled Warning: this example requires resistors in your circuit
 RBD::Button button(2, false); // pin number, input_pullup flag

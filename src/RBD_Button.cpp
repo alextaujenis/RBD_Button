@@ -1,19 +1,18 @@
-// Arduino RBD Button Library v1.0.1 - Read and debounce buttons and switches.
+// Arduino RBD Button Library v2.0.0 - Read and debounce buttons and switches.
 // https://github.com/alextaujenis/RBD_Button
 // Copyright 2015 Alex Taujenis
 // MIT License
 
 #include <Arduino.h>
-#include <RBD_Button.h>
-#include <RBD_Timer.h>
+#include <RBD_Timer.h>  // https://github.com/alextaujenis/RBD_Timer
+#include <RBD_Button.h> // https://github.com/alextaujenis/RBD_Button
 
 namespace RBD {
-
   // input pullup enabled by default
   Button::Button(int pin)
   : _pressed_debounce(), _released_debounce() {
     _pin = pin;
-    inputPullup();
+    _inputPullup();
     setDebounceTimeout(_debounce_timeout);
   }
 
@@ -21,27 +20,9 @@ namespace RBD {
   Button::Button(int pin, bool input_pullup)
   : _pressed_debounce(), _released_debounce() {
     _pin = pin;
-    if(input_pullup) {inputPullup();}
-    else {disableInputPullup();}
+    if(input_pullup) {_inputPullup();}
+    else {_disableInputPullup();}
     setDebounceTimeout(_debounce_timeout);
-  }
-
-  void Button::inputPullup() {
-    pinMode(_pin, INPUT_PULLUP);
-    invertReading();
-  }
-
-  void Button::disableInputPullup() {
-    pinMode(_pin, INPUT);
-    resetReading();
-  }
-
-  void Button::invertReading() {
-    _invert = true;
-  }
-
-  void Button::resetReading() {
-    _invert = false;
   }
 
   void Button::setDebounceTimeout(unsigned long value) {
@@ -94,5 +75,22 @@ namespace RBD {
       _has_been_released = false;
       return false;
     }
+  }
+
+  void Button::invertReading() {
+    _invert = !_invert;
+  }
+
+
+  // private
+
+  void Button::_inputPullup() {
+    pinMode(_pin, INPUT_PULLUP);
+    _invert = true;
+  }
+
+  void Button::_disableInputPullup() {
+    pinMode(_pin, INPUT);
+    _invert = false;
   }
 }
