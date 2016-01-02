@@ -1,6 +1,6 @@
-// Arduino RBD Button Library Example v2.0.1 - Debounce a button with events. INPUT_PULLUP enabled.
+// Arduino RBD Button Library Example v2.0.2 - Debounce a button with events. INPUT_PULLUP enabled.
 // https://github.com/alextaujenis/RBD_Button
-// Copyright 2015 Alex Taujenis
+// Copyright 2016 Alex Taujenis
 // MIT License
 
 #include <RBD_Timer.h>  // https://github.com/alextaujenis/RBD_Timer
