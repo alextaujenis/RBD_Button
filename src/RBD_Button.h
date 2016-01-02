@@ -1,4 +1,4 @@
-// Arduino RBD Button Library v2.0.2 - Read and debounce buttons and switches.
+// Arduino RBD Button Library v2.1.0 - Read and debounce buttons and switches.
 // https://github.com/alextaujenis/RBD_Button
 // Copyright 2016 Alex Taujenis
 // MIT License

@@ -1,4 +1,4 @@
-// Arduino RBD Button Library v2.0.2 - Unit test coverage.
+// Arduino RBD Button Library v2.1.0 - Unit test coverage.
 // https://github.com/alextaujenis/RBD_Button
 // Copyright 2016 Alex Taujenis
 // MIT License
@@ -106,6 +106,7 @@ RBD::Button button(2);
     assertTrue(button.onPressed());
     delay(1);
     releaseButton(); // bounce
+    assertFalse(button.onPressed());
     delay(1);
     pressButton();
     assertFalse(button.onPressed());
@@ -151,6 +152,7 @@ RBD::Button button(2);
     assertTrue(button.onReleased());
     delay(1);
     pressButton(); // bounce
+    assertFalse(button.onReleased());
     delay(1);
     releaseButton();
     assertFalse(button.onReleased());
@@ -200,10 +202,12 @@ void testSetup() {
 }
 
 void testCleanup() {
-  pressButton();                 // press the button
-  button.onReleased();           // reset event flag
-  releaseButton();               // release button
-  button.onPressed();            // reset event flag
+  button.setDebounceTimeout(1);
+  delay(2);
+  releaseButton();
+  button.onPressed();
+  pressButton();
+  button.onReleased();
   button.setDebounceTimeout(10); // reset the default debounce timeout
   delay(21);                     // wait for debounce to expire between tests
 }
