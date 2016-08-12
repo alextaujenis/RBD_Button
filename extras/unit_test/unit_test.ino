@@ -1,4 +1,4 @@
-// Arduino RBD Button Library v2.1.0 - Unit test coverage.
+// Arduino RBD Button Library v2.1.1 - Unit test coverage.
 // https://github.com/alextaujenis/RBD_Button
 // Copyright 2016 Alex Taujenis
 // MIT License

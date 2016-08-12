@@ -1,4 +1,4 @@
-#Arduino Button Library v2.1.0 [![Build Passing](https://raw.githubusercontent.com/alextaujenis/RobotsBigData/gh-pages/src/images/passing.png)](https://github.com/alextaujenis/RBD_Button/blob/master/extras/unit_test/unit_test.ino)
+#Arduino Button Library v2.1.1 [![Build Passing](https://raw.githubusercontent.com/alextaujenis/RobotsBigData/gh-pages/src/images/passing.png)](https://github.com/alextaujenis/RBD_Button/blob/master/extras/unit_test/unit_test.ino)
 Read and debounce buttons and switches without delay or interrupts.
 
 * [Documentation](http://robotsbigdata.com/docs-arduino-button.html)
