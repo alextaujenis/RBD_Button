@@ -10,15 +10,21 @@
 namespace RBD {
   // input pullup enabled by default
   Button::Button(int pin)
-  : _pressed_debounce(), _released_debounce() {
+  : _pressed_debounce(), _released_debounce()
+  , _digitalRead(::digitalRead), _pinMode(::pinMode)
+  {
     _pin = pin;
     _inputPullup();
     setDebounceTimeout(_debounce_timeout);
   }
 
   // overloaded constructor to disable input pullup
-  Button::Button(int pin, bool input_pullup)
-  : _pressed_debounce(), _released_debounce() {
+  Button::Button(int pin, bool input_pullup,
+                 std::function<int(uint8_t)> digitalRead,
+                 std::function<void(uint8_t,uint8_t)> pinMode)
+  : _pressed_debounce(), _released_debounce()
+  , _digitalRead(digitalRead), _pinMode(pinMode)
+  {
     _pin = pin;
     if(input_pullup) {_inputPullup();}
     else {_disableInputPullup();}
@@ -32,7 +38,7 @@ namespace RBD {
   }
 
   bool Button::isPressed() {
-    _temp_reading = digitalRead(_pin);
+    _temp_reading = _digitalRead(_pin);
     if(_invert) {return !_temp_reading;}
     else {return _temp_reading;}
   }
@@ -83,10 +89,10 @@ namespace RBD {
   // private
 
   void Button::_inputPullup() {
-    pinMode(_pin, INPUT_PULLUP);
+    _pinMode(_pin, INPUT_PULLUP);
   }
 
   void Button::_disableInputPullup() {
-    pinMode(_pin, INPUT);
+    _pinMode(_pin, INPUT);
   }
 }

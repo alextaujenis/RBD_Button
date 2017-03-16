@@ -8,12 +8,16 @@
 
 #include <Arduino.h>
 #include <RBD_Timer.h>  // https://github.com/alextaujenis/RBD_Timer
+#include <functional>
 
 namespace RBD {
   class Button {
     public:
       Button(int pin);                    // constructor: input pullup enabled by default
       Button(int pin, bool input_pullup); // overloaded constructor: flag available to disable input pullup
+      Button(int pin, bool input_pullup,
+             std::function<int(uint8_t)> digitalRead=::digitalRead,
+             std::function<void(uint8_t, uint8_t)> pinMode=::pinMode);
       void setDebounceTimeout(unsigned long value);
       bool isPressed();
       bool isReleased();
@@ -31,6 +35,8 @@ namespace RBD {
       void _disableInputPullup();
       Timer _pressed_debounce;
       Timer _released_debounce;
+      std::function<int(uint8_t)> _digitalRead;
+      std::function<void(uint8_t, uint8_t)> _pinMode;
   };
 }
 #endif
