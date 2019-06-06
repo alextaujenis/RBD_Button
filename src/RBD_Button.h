@@ -1,6 +1,6 @@
-// Arduino RBD Button Library v2.1.1 - Read and debounce buttons and switches.
+// Arduino RBD Button Library v2.2.0 - Read and debounce buttons and switches.
 // https://github.com/alextaujenis/RBD_Button
-// Copyright 2016 Alex Taujenis
+// Copyright 2019 Alex Taujenis
 // MIT License
 
 #ifndef RBD_BUTTON_H
@@ -22,15 +22,15 @@ namespace RBD {
       void invertReading();
     private:
       int _pin;
-      unsigned long _debounce_timeout = 10; // ms
+      bool _invert = true;
+      bool _temp_state = false;
+      bool _state = false;
       bool _has_been_pressed  = false;
       bool _has_been_released = false;
-      bool _invert = true;
-      bool _temp_reading;
       void _inputPullup();
       void _disableInputPullup();
-      Timer _pressed_debounce;
-      Timer _released_debounce;
+      void _updateState();
+      Timer _debounce_timer;
   };
 }
 #endif

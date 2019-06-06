@@ -1,6 +1,6 @@
-// Arduino RBD Button Library v2.1.1 - Unit test coverage.
+// Arduino RBD Button Library v2.2.0 - Unit test coverage.
 // https://github.com/alextaujenis/RBD_Button
-// Copyright 2016 Alex Taujenis
+// Copyright 2019 Alex Taujenis
 // MIT License
 
 // Overview:
@@ -20,6 +20,48 @@
 #include <RBD_Button.h>  // https://github.com/alextaujenis/RBD_Button
 
 RBD::Button button(2);
+
+// setup and run tests
+void setup() {
+  testSetup();
+  Serial.begin(115200);
+  while(!Serial);
+}
+
+void loop() {
+  Test::run();
+}
+
+// configure pin 3 as a simulated button
+int pin = 3;
+
+void testSetup() {
+  pinMode(pin, OUTPUT);
+  digitalWrite(pin, LOW);
+}
+
+void testCleanup() {
+  button.setDebounceTimeout(1);
+  releaseButton();
+  delay(2);
+  button.isPressed();
+  pressButton();
+  delay(2);
+  button.isPressed();
+  releaseButton();
+  delay(2);
+  button.isPressed();
+  button.setDebounceTimeout(10); // reset the default debounce timeout
+  delay(100);
+}
+
+void pressButton() {
+  digitalWrite(pin, HIGH);
+}
+
+void releaseButton() {
+  digitalWrite(pin, LOW);
+}
 
 // constructor: input_pullup
   test(constructor_should_enable_input_pullup_by_default) {
@@ -67,6 +109,19 @@ RBD::Button button(2);
     testCleanup();
   }
 
+  test(isPressed_should_be_debounced) {
+    pressButton();
+    assertTrue(button.isPressed());
+    releaseButton(); // bounce
+    delay(1);
+    assertTrue(button.isPressed());
+    delay(7);
+    assertTrue(button.isPressed());
+    delay(4);
+    assertFalse(button.isPressed());
+    testCleanup();
+  }
+
 // isReleased
   test(isReleased_should_return_true_when_released) {
     releaseButton();
@@ -76,6 +131,22 @@ RBD::Button button(2);
 
   test(isReleased_should_return_false_when_pressed) {
     pressButton();
+    assertFalse(button.isReleased());
+    testCleanup();
+  }
+
+  test(isReleased_should_be_debounced) {
+    pressButton();
+    assertTrue(button.isPressed());
+    releaseButton();
+    delay(10);
+    assertTrue(button.isReleased());
+    pressButton(); // bounce
+    delay(1);
+    assertTrue(button.isReleased());
+    delay(7);
+    assertTrue(button.isReleased());
+    delay(4);
     assertFalse(button.isReleased());
     testCleanup();
   }
@@ -117,11 +188,11 @@ RBD::Button button(2);
     // simulate two legit button presses
     pressButton();
     assertTrue(button.onPressed());
-    delay(11);
     releaseButton();
-    assertFalse(button.onPressed());
     delay(11);
+    assertFalse(button.onPressed());
     pressButton();
+    delay(11);
     assertTrue(button.onPressed());
     testCleanup();
   }
@@ -182,40 +253,66 @@ RBD::Button button(2);
     testCleanup();
   }
 
-// setup and run tests
-void setup() {
-  testSetup();
-  Serial.begin(115200);
-  while(!Serial);
-}
+  test(invertReading_isPressed_should_return_false_when_pressed) {
+    button.invertReading();
+    pressButton();
+    assertFalse(button.isPressed());
+    button.invertReading(); // toggle back to normal
+    testCleanup();
+  }
 
-void loop() {
-  Test::run();
-}
+  test(invertReading_isPressed_should_return_true_when_released) {
+    button.invertReading();
+    releaseButton();
+    assertTrue(button.isPressed());
+    button.invertReading(); // toggle back to normal
+    testCleanup();
+  }
 
-// configure pin 3 as a simulated button
-int pin = 3;
+  test(invertReading_isReleased_should_return_false_when_released) {
+    button.invertReading();
+    releaseButton();
+    assertFalse(button.isReleased());
+    button.invertReading(); // toggle back to normal
+    testCleanup();
+  }
 
-void testSetup() {
-  pinMode(pin, OUTPUT);
-  digitalWrite(pin, LOW);
-}
+  test(invertReading_isReleased_should_return_true_when_pressed) {
+    button.invertReading();
+    pressButton();
+    assertTrue(button.isReleased());
+    button.invertReading(); // toggle back to normal
+    testCleanup();
+  }
 
-void testCleanup() {
-  button.setDebounceTimeout(1);
-  delay(2);
-  releaseButton();
-  button.onPressed();
-  pressButton();
-  button.onReleased();
-  button.setDebounceTimeout(10); // reset the default debounce timeout
-  delay(21);                     // wait for debounce to expire between tests
-}
+  test(invertReading_onPressed_should_return_false_when_pressed) {
+    button.invertReading();
+    pressButton();
+    assertFalse(button.onPressed());
+    button.invertReading(); // toggle back to normal
+    testCleanup();
+  }
 
-void pressButton() {
-  digitalWrite(pin, HIGH);
-}
+  test(invertReading_onPressed_should_return_true_when_released) {
+    button.invertReading();
+    releaseButton();
+    assertTrue(button.onPressed());
+    button.invertReading(); // toggle back to normal
+    testCleanup();
+  }
 
-void releaseButton() {
-  digitalWrite(pin, LOW);
-}
+  test(invertReading_onReleased_should_return_false_when_released) {
+    button.invertReading();
+    releaseButton();
+    assertFalse(button.onReleased());
+    button.invertReading(); // toggle back to normal
+    testCleanup();
+  }
+
+  test(invertReading_onReleased_should_return_true_when_pressed) {
+    button.invertReading();
+    pressButton();
+    assertTrue(button.onReleased());
+    button.invertReading(); // toggle back to normal
+    testCleanup();
+  }
