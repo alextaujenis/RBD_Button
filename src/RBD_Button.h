@@ -23,8 +23,8 @@ namespace RBD {
     private:
       int _pin;
       bool _invert = true;
-      bool _temp_state = false;
       bool _state = false;
+      bool _temp_state = false;
       bool _has_been_pressed  = false;
       bool _has_been_released = false;
       void _inputPullup();

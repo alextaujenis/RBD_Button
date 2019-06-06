@@ -57,8 +57,6 @@ namespace RBD {
     _invert = !_invert;
   }
 
-  // private
-
   void Button::_updateState() {
     if (_debounce_timer.isExpired()) {
       _temp_state = digitalRead(_pin);
@@ -66,17 +64,11 @@ namespace RBD {
         _debounce_timer.restart();
         _state = _temp_state;
         if (_invert) {
-          if (_state) { // button released
-            _has_been_pressed = false;
-          } else {  // button pressed
-            _has_been_released = false;
-          }
+          if (_state) { _has_been_pressed = false; }
+          else { _has_been_released = false; }
         } else {
-          if (_state) { // button pressed
-            _has_been_released = false;
-          } else { // button released
-            _has_been_pressed = false;
-          }
+          if (_state) { _has_been_released = false; }
+          else { _has_been_pressed = false; }
         }
       }
     }
