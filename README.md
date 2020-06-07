@@ -9,4 +9,4 @@ Read and debounce buttons and switches without delay or interrupts.
 \**Please include your Arduino make/model and IDE version when reporting an issue with this library.*
 
 # License
-This code is available under the [MIT License](http://opensource.org/licenses/mit-license.php).
+Copyright (c) 2015 Alex Taujenis - MIT License

@@ -1,7 +1,6 @@
 // Arduino RBD Button Library v2.2.0 - Read and debounce buttons and switches.
 // https://github.com/alextaujenis/RBD_Button
-// Copyright 2019 Alex Taujenis
-// MIT License
+// Copyright (c) 2015 Alex Taujenis - MIT License
 
 #include <Arduino.h>
 #include <RBD_Timer.h>  // https://github.com/alextaujenis/RBD_Timer
